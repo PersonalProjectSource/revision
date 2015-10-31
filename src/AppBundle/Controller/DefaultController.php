@@ -13,9 +13,30 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
+        $context = $this->container->get('security.context');
+
+        if ($context->isGranted('ROLE_SUPER_ADMIN')) {
+            var_dump("redirect super admin");
+            $redirectRoot = 'default/index.html.twig';
+        }
+        elseif ($context->isGranted('ROLE_ADMIN')) {
+//            dump($this->generateUrl('admin_index'));die;
+            return $this->redirect($this->generateUrl('admin_index'));
+        }
+        elseif ($context->isGranted('ROLE_USER')) {
+            $redirectRoot = 'default/index.html.twig';
+        }
+        else {
+            die('else');
+            $redirectRoot = 'default/index';
+        }
+
+
+        return $this->render($redirectRoot, array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
+//        return $this->render($redirectRoot, array(
+//            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+//        ));
     }
 }

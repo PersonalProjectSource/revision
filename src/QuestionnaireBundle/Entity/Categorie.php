@@ -136,4 +136,8 @@ class Categorie
     {
         return $this->questions;
     }
+
+    public function __toString() {
+        return $this->nomCat;
+    }
 }

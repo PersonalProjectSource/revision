@@ -4,13 +4,37 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
+    <parameters>
+        <parameter key="questionnaire_service.class">QuestionnaireBundle\Services\QuestionnaireServices</parameter>
+        <parameter key="questionnaire_manager.class">QuestionnaireBundle\Managers\QuestionnaireManager</parameter>
+        <parameter key="question_type.class">QuestionnaireBundle\Form\QuestionType</parameter>
+        <parameter key="questionnaire_repository.class">QuestionnaireBundle\Entity\Questionnaire</parameter>
+        <parameter key="question_twig_filter.class">QuestionnaireBundle\Twig\Extension\QuestionnaireTwigExtension</parameter>
+    </parameters>
+
     <services>
-        <service id="questionnaire.example" class="QuestionnaireBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="questionnaire.questionaire_service" class="%questionnaire_service.class%">
+            <argument type="service" id="questionnaire.questionnaire_manager"/>
+            <argument type="service" id="security.context" />
+        </service>
+
+
+        <service id="questionnaire.questionnaire_manager" class="%questionnaire_manager.class%">
+            <argument type="service" id="request" strict="false"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="validator"/>
+            <argument type="service" id="security.context" />
+            <!--<tag name="form.type" alias="questionnairebundle_question"/>-->
+        </service>
+
+        <service id="questionnaire.questionnaire_type" class="%question_type.class%">
+            <argument type="service" id="request" strict="false"/>
+            <argument type="service" id="security.context" />
+            <tag name="form.type" alias="questionnairebundle_question"/>
+        </service>
+
+        <service id="questionnaire.twig_extension" class="%question_twig_filter.class%">
+            <tag name="twig.extension" />
         </service>
     </services>
-    -->
 </container>
