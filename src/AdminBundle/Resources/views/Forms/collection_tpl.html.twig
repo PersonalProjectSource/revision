@@ -1,0 +1,66 @@
+{% block my_widget %}
+    toto
+{% endblock %}
+
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('my_widget') }) %}
+        {% endif %}
+        {{ block('form_widget') }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock form_widget_simple -%}
+
+{%- block form_widget -%}
+    {% if compound %}
+        {{- block('form_widget_compound') -}}
+    {% else %}
+        {{- block('form_widget_simple') -}}
+    {% endif %}
+{%- endblock form_widget -%}
+
+{%- block form_widget_compound -%}
+    <div class="form-group">
+        <div class="col-lg-10">
+            <div>
+                {{- block('form_rows') -}}
+            </div>
+        </div>
+    </div>
+{%- endblock form_widget_compound -%}
+
+{%- block form_rows -%}
+        {%- set counter = 0 -%}
+        {% for child in form %}
+            {#{{- form_label(child) -}}#}
+
+            {#{{ dump(child.vars.value.id) }}#}
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <div class="reponse input-group m-bot15" style="background-color: #ffffff">
+                        <span class="input-group-addon" >
+                            <input type="checkbox" class="check" name="reponses[{{ counter }}]" value="{{ child.vars.value.vrai }}">
+                        </span>
+                        <input type="text" class="form-control" value="{{ child.vars.value.libelle }}" disabled="disabled" style="background-color: white">
+                        <div id="message_{{ counter }}"class="not_displayed" >Error message</div>
+                    </div>
+                </div>
+            </div>
+            {%- set counter = counter + 1 -%}
+        {% endfor %}
+
+{%- endblock form_rows -%}
+
+
+
+
+
+
+
+
+

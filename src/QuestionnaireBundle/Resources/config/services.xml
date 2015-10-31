@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+:<?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,7 +17,6 @@
             <argument type="service" id="questionnaire.questionnaire_manager"/>
             <argument type="service" id="security.context" />
         </service>
-
 
         <service id="questionnaire.questionnaire_manager" class="%questionnaire_manager.class%">
             <argument type="service" id="request" strict="false"/>

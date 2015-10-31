@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+{% form_theme form 'QuestionnaireBundle:Forms:collection_tpl.html.twig' %}
+
+{% block body -%}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="panel">
+            <header class="panel-heading">Question {{ nb_question }} / 20</header>
+            {#{% set tst="coucou" | trans %}#}
+            {#{{ tst | reverse_color}}#}
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                        {{ form_start(form) }}
+                            {{ form_errors(form) }}
+                            <div class="input-group m-bot15" style="background-color: #ffffff; width: 100%">
+                                {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
+                                {#{{ form_label(form.categorie) }}#}
+                                {#{{ form_errors(form.categorie) }}#}
+                                {#{{ form_widget(form.categorie, {'attr': {'class': 'foo'}}) }}#}
+                            </div>
+                            {{ form_errors(form.reponses) }}
+                            <div class="recup form-group">
+                                {{ form_widget(form.reponses) }}
+                            </div>
+                            <input type="hidden" id="questionnaire_id" name="questionnaire_id" value="{{ questionnaire_id }}"/>
+                            <input type="hidden" id="question_id" name="question_id" value="{{ question_id }}"/>
+                            <input type="hidden" id="categorie_id" name="categorie_id" value="{{ categorie_id }}"/>
+                            {{ form_rest(form) }}
+                        {{ form_end(form, {'render_rest': false}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/javascript" >
+
+    $( "#target" ).submit( function( event ) {
+        console.log('submitok');
+        var questionnaire = $('#questionnaire_id').val();
+        var question = $('#question_id').val();
+        var data = {questionnaire_id: questionnaire, question_id: question};
+        var victory = false;
+
+        // verification des bonnes reponses.
+        $('.check:checked').each(function() {
+            victory = true;
+            if (1 != $(this).val()) {
+                victory = false;
+            }
+//                console.log($(this).val());
+
+        });
+        console.log(victory);
+//        console.log(questionnaire,question);
+
+        $('.recup.response').each(function () {
+            console.log($(this));
+        } );
+//        return false;
+//        event.preventDefault();
+    });
+    $('#btn-ajax').on('click', function() {
+
+        var questionnaire = $('#questionnaire_id').val();
+        var question = $('#question_id').val();
+        var data = {questionnaire_id: questionnaire, question_id: question};
+        var victory = false;
+
+        // verification des bonnes reponses.
+        $('.check:checked').each(function() {
+            victory = true;
+            if (1 != $(this).val()) {
+                victory = false;
+            }
+//                console.log($(this).val());
+
+        });
+        console.log(victory);
+//        console.log(questionnaire,question);
+
+        $('.recup.response').each(function () {
+            console.log($(this));
+        } );
+        {#$.ajax({#}
+            {#url: "{{ path('controller_response') }}",#}
+            {#method: "POST",#}
+            {#data: {#}
+                {#data: data#}
+            {#}#}
+        {#})#}
+                {#.done(function(rep) {#}
+                    {#console.log( rep[0] );#}
+                {#})#}
+                {#.fail(function() {#}
+                    {#alert( "error" );#}
+                {#})#}
+                {#.always(function() {#}
+{#//                    alert( "complete" );#}
+                {#});#}
+
+    });
+    </script>
+{% endblock %}

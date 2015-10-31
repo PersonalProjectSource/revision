@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Question creation</h1>
+
+    {{ form(form) }}
+        <button id="add_response">Ajouter une réponse</button>
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('question') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var i = 0;
+        $('#add_response').on('click', function() {
+            var response_form = $('#questionnairebundle_question_reponses').attr('data-prototype');
+            $('#questionnairebundle_question_reponses').append('<div id="reponse_'+i+'">'+response_form+'</div>')
+            i = i+1;
+        });
+        console.log($('#questionnairebundle_question_reponses').attr('data-prototype'));
+    </script>
+{% endblock %}
