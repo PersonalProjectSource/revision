@@ -19,6 +19,31 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new QuestionnaireBundle\QuestionnaireBundle(),
             new UserBundle\UserBundle(),
+
+            // sonata admin bundles
+//            new Symfony\Cmf\Bundle\TreeBrowserBundle\CmfTreeBrowserBundle(),
+//            new Sonata\DoctrinePHPCRAdminBundle\SonataDoctrinePHPCRAdminBundle(),
+
+            // The admin requires some twig functions defined in the security
+            // bundle, like is_granted
+
+            // Add your dependencies
+//            new Sonata\CoreBundle\SonataCoreBundle(),
+//            new Sonata\BlockBundle\SonataBlockBundle(),
+//            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            //...
+
+            // If you haven't already, add the storage bundle
+            // This example uses SonataDoctrineORMAdmin but
+            // it works the same with the alternatives
+//            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+
+            // Then add SonataAdminBundle
+//            new Sonata\AdminBundle\SonataAdminBundle(),
+
+            new FOS\UserBundle\FOSUserBundle(),
+
+            new AdminBundle\AdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
